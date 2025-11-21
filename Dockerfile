@@ -1,6 +1,5 @@
 FROM rocker/shiny:4.3.1
 
-# Instalar sistema base
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -11,22 +10,18 @@ RUN apt-get update && apt-get install -y \
     libudunits2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar paquetes de R necesarios
 RUN R -e "install.packages(c( \
     'shiny', \
     'dplyr', \
+    'ggplot2', \
     'readxl', \
-    'readr', \
     'leaflet', \
-    'htmltools', \
-    'terra' \
+    'stringi' \
   ), repos = 'https://cloud.r-project.org')"
 
-# Copiar la app al contenedor
 WORKDIR /app
 COPY . /app
 
-# Render usa el puerto definido en la variable de entorno PORT
 EXPOSE 8080
 
-CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port = as.numeric(Sys.getenv('PORT', 8080)))"]
+CMD [\"R\", \"-e\", \"shiny::runApp('/app', host='0.0.0.0', port = as.numeric(Sys.getenv('PORT', 8080)))\"]
