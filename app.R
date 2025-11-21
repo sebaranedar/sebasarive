@@ -4,12 +4,6 @@
 # filtros región + comuna y mapa avanzado.
 # ============================
 
-install.packages("shiny")
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("readxl")
-install.packages("leaflet")
-install.packages("stringi")
 
 library(shiny)
 library(dplyr)
